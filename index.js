@@ -24,5 +24,5 @@ app.listen(8080, ()=>{
     }catch(err){
         console.log(err)
     }
-    console.log(`Port is listing on http://localhost:${process.env.PORT}`)
+    console.log("Port is listing on http://localhost:8080")
 })
