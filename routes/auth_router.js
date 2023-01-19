@@ -7,21 +7,21 @@ const user=Router();
 user.post("/signup",async (req,res)=>{
     const {email,password}=req.body;
     const userPresent=await auth_model.findOne({email})
-    if(userPresent?.email){
-        res.send("Try Login, user already exists")
+    if(userPresent){
+        res.send({"msg":"user already present"})
     }
     else{
         try{
             bcrypt.hash(password,4,async function(err,hash){
                 const user=new auth_model({email,password:hash})
                 await user.save()
-                res.send("signup Sucess..")
+                res.send({"msg":"Signup sucessful"})
             });
 
         }
         catch(err){
             console.log(err);
-            res.send("Something went wrong")
+            res.send({"msg":"Something went wrong"})
         }
     }
 })
@@ -37,17 +37,17 @@ user.post("/login",async(req,res)=>{
                     res.send({"msg":"Login Sucess..","token":token})
                 }
                 else{
-                    res.send("Login Failed")
+                    res.send({"msg":"Login Failed"})
                 }
             })
         }
         else{
-            res.send("Login Failed")
+            res.send({"msg":"Login Failed"})
         }
     }
     catch(err){
         console.log(err);
-        res.send("Something went wrong")
+        res.send({"msg":"Something went wrong"})
     }
 })
 module.exports={user}
